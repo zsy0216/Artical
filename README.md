@@ -1,2 +1,2 @@
 # Article
-Something writed by myself.
+Something written by myself.
