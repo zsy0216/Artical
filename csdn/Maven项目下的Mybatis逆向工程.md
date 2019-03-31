@@ -82,11 +82,11 @@
 
 ## 3.运行mybatis配置文件
 
-![1543136320738](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\1543136320738.png)
+![1543136320738](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1543136320738.png)
 
 * 选择右上角运行按钮旁边的三角，选择Edit Configurations
 
-![1543136597734](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\1543136597734.png)
+![1543136597734](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1543136597734.png)
 
 1. 点击+号选择maven
 2. 自定义name

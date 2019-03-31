@@ -120,7 +120,7 @@ Spring与Mybatis完美整合，不予要mybatis的配置映射文件
 
 ## 2.1   Springmvc
 
-![1543729079239](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\1543729079239.png)
+![1543729079239](ssm.assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1543729079239.png)
 
 1. 前端控制器：接收请求，响应结果，相当于转发器。
 
