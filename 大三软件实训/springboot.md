@@ -85,6 +85,8 @@ mybatis.type-aliases-package=com.zut.hostest.entity
 #声明与数据库交互用的XxxMapper文件位置
 mybatis.mapper-locations=classpath:mapper/*.xml
 
+spring.mvc.static-path-pattern=/static/**
+
 #--------------------数据库配置-------------------------
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost/test?characterEncoding=utf8
