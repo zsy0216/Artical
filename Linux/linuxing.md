@@ -109,3 +109,38 @@ set expandtab
 * 红色：压缩文件或包文件
 * 白色：一般性文件，如文本文件，配置文件，源码文件等
 * 浅蓝色文件：链接文件，主要是使用ln命令建立的文件
+
+## 8.docker报Error response from daemon:
+
+```shell
+Error response from daemon: Get https://index.docker.io/v1/search?q=mysql&n=25: dial tcp 52.54.178.62:443: i/o timeout
+```
+
+在`/etc/hosts`文件中添加一个可用ip
+
+```shell
+52.5.185.86 registry-1.docker.io
+```
+
+方法2：
+
+```shell
+#1修改docker配置
+vim /etc/docker/daemon.json
+#修改配置
+{
+	"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+#重启docker
+systemctl restart docker
+systemctl daemon-reload
+```
+
+其他镜像地址：
+
+```shell
+#Docker官方中国区: https://registry.docker-cn.com
+#网易             http://hub-mirror.c.163.com
+#ustc中国科技大学   https://docker.mirrors.ustc.edu.cn
+```
+
