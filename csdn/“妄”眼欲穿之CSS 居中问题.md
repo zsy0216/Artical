@@ -36,6 +36,8 @@ text-align:center;
 
 满足宽度（块状元素的宽度width为固定值）和块状两个条件的元素可以通过左右margin值为auto来实现居中。
 
+注：此时需保证：position: relative;
+
 ```html
 .div1{
 　　　　 width:200px;
