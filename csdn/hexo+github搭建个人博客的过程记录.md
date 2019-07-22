@@ -56,10 +56,6 @@
       ```shell
       #生成密钥，默认存储路径：C:\User\Administrator\.ssh
       ssh-keygen -t rsa -C"youremail"
-      #添加密钥到ssh-agent
-      eval "$(ssh-agent -s)"
-      #添加生成的SSH key到ssh-agent
-      ssh -add ~/.ssh/id_rsa
       ```
 
    4. 在github上添加ssh key.
@@ -176,5 +172,16 @@ deploy:
   type: git
   repository: git@github.com:username/username.github.io.git
   branch: master
+```
+
+之后执行下面的命令进行github的部署
+
+```shell
+//安装自动部署工具
+npm install hexo-deployer-git --save
+//更新
+hexo g
+//部署
+hexo d
 ```
 
