@@ -20,7 +20,7 @@ def queryUsers(request):
     return render(request, "userInfo.html", context)
 ```
 
-![viewusers](https://zsy0216.coding.me/images/csdn/django/viewusers.png)
+![viewusers](https://zsy0216.coding.me/image/csdn/django/viewusers.png)
 
 ### 1.2 编写前端显示界面
 

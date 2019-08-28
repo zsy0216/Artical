@@ -33,7 +33,7 @@ Vector：数组实现，保证了线程同步
 
 接口方法：
 
-![map-method](<https://zsy0216.coding.me/images/java/javase/map-method.png>)
+![map-method](https://zsy0216.coding.me/images/java/javase/map-method.png)
 
 ### 5.使用迭代器Iterator遍历集合
 
@@ -81,6 +81,68 @@ Set<String> set = new HashSet<>();
 for(Iterator<String> iter=set.iterator();iter.hasNext();{
     String temp = iter.next();
     System.out.println(temp);
+}
+```
+
+## 多线程
+
+### 1.创建线程常用的两种方法
+
+#### 继承Thread类
+
+```java
+package com.tassel.thread;
+
+/**
+ * 实现线程的第一种方法 继承Thread类,重写run()方法,调用start()方法.
+ */
+public class MyThread extends Thread {
+
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i + "---唱跳rap篮球");
+		}
+	}
+
+	public static void main(String[] args) {
+		MyThread myThread = new MyThread();
+		myThread.start();
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i + "---music!");
+		}
+	}
+}
+```
+
+#### 实现Runable接口
+
+```java
+package com.tassel.thread;
+
+/**
+ * 实现线程的第二种方法：实现Runable接口,重写run()方法.
+ */
+public class MyRunable implements Runnable {
+
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i + "---music!");
+		}
+	}
+
+	public static void main(String[] args) {
+//		new Thread(new MyRunable()).start();
+		MyRunable myRunable = new MyRunable();
+		Thread thread = new Thread(myRunable);
+		thread.start();
+		
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i + "---唱跳rap篮球");
+		}
+	}
 }
 ```
 
