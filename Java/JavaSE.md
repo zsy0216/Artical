@@ -6,13 +6,13 @@ Collection：容器，集合。
 
 子接口List可以重复，有顺序；Set不可重复，无顺序。
 
-![collection](javase/collection.png)
+![collection](https://zsy0216.github.io/image/java/javase/collection.png)
 
 ### 2.Collection接口方法
 
 List和Set作为Collection的子接口，继承Collection的所有方法。
 
-![collection-method](javase/collection-method.png)
+![collection-method](https://zsy0216.github.io/image/java/javase/collection-method.png)
 
 ### 3.List接口的实现类
 
@@ -25,7 +25,7 @@ Vector：数组实现，保证了线程同步
 
 接口方法：
 
-![list-method](<javase/list-method.png>)
+![list-method](https://zsy0216.github.io/image/java/javase/list-method.png)
 
 ### 4.Map接口
 
@@ -33,7 +33,7 @@ Vector：数组实现，保证了线程同步
 
 接口方法：
 
-![map-method](javase/map-method.png)
+![map-method](https://zsy0216.github.io/image/java/javase/map-method.png)
 
 ### 5.使用迭代器Iterator遍历集合
 
