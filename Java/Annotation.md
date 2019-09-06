@@ -30,5 +30,23 @@
  	当传输数据格式为以下格式则不需要此注解;
 
 1. x-www-form-urlencoded
-
   2. form-data
+
+#### @PathVariable
+
+使用位置：controller方法的参数上
+
+作用：得到url上带的参数
+
+示例：
+
+```java
+ 	@RequestMapping("show/{id}/{name}")
+    public ModelAndView test(@PathVariable("id") Long ids ,@PathVariable("name") String names){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("msg","占位符映射：id:"+ids+";name:"+names);
+        mv.setViewName("hello2");
+        return mv;
+    }
+```
+

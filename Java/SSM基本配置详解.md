@@ -188,7 +188,7 @@ Spring框架简化数据库访问的方式之一就是管理数据库连接的�
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <!-- contextConfigLocation配置springmvc加载的配置文件(配置处理器映射器，适配器)
-        如果不配置，默认加载的是/WEB-INF/servlet名称-servlet.xml(springmvc-servlet.xml)-->
+        如果不配置，默认加载的是/WEB-INF/<servlet-name>-servlet.xml(springmvc-servlet.xml)-->
     <init-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring-mvc.xml</param-value>

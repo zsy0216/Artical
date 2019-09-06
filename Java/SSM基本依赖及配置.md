@@ -351,6 +351,7 @@ jdbc.password=123456
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/springmvc.xml</param-value>
         </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -362,6 +363,11 @@ jdbc.password=123456
              不能根据jsp页面找到handler，会报错。
         -->
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+     <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 </web-app>
 ```
