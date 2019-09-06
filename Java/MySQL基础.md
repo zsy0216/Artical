@@ -90,25 +90,25 @@
 
 * 创建数据库：
 	
-	```bash
+	```mysql
 	create database 数据库名称;
 	```
 	
 * 创建数据库，判断不存在，再创建：
 	
-	```bash
+	```mysql
 	create database if not exists 数据库名称;
 	```
 	
 * 创建数据库，并指定字符集
 	
-	```
+	```mysql
 	create database 数据库名称 character set 字符集名;
 	```
 	
 * 练习： 创建db4数据库，判断是否存在，并制定字符集为utf8(没有-）
 
-  ```bash
+  ```mysql
   create database if not exists db4 character set utf8;
   ```
 
@@ -116,13 +116,13 @@
 
 * 查询所有数据库的名称:
 	
-	```bash
+	```mysql
 	show databases;
 	```
 	
 * 查询某个数据库的字符集:查询某个数据库的创建语句
 	
-	```bash
+	```mysql
 	show create database 数据库名称;
 	```
 
@@ -130,7 +130,7 @@
 
 * 修改数据库的字符集
 	
-	```bash
+	```mysql
 	alter database 数据库名称 character set 字符集名称;
 	```
 
@@ -138,13 +138,13 @@
 
 * 删除数据库
 	
-	```bash
+	```mysql
 	drop database 数据库名称;
 	```
 	
 * 判断数据库存在，存在再删除
 	
-	```bash
+	```mysql
 	drop database if exists 数据库名称;
 	```
 
@@ -152,13 +152,13 @@
 
 * 查询当前正在使用的数据库名称
 	
-	```bash
+	```mysql
 	select database();
 	```
 	
 * 使用数据库
 	
-	```
+	```mysql
 	use 数据库名称;
 	```
 
@@ -168,13 +168,15 @@
 
 基本语法：
 
-	create table 表名(
-		列名1 数据类型1 [完整约束条件],
-		列名2 数据类型2 [完整约束条件],
-		...
-		列名n 数据类型n [完整约束条件]
-	);
-	# 注意：最后一列，不需要加逗号（,）
+```mysql
+create table 表名(
+	列名1 数据类型1 [完整约束条件],
+	列名2 数据类型2 [完整约束条件],
+	...
+	列名n 数据类型n [完整约束条件]
+);
+# 注意：最后一列，不需要加逗号（,）
+```
 
 ##### 补充1：常用的数据库类型：
 
@@ -213,7 +215,7 @@
 
 Exam：
 
-```bash
+```mysql
 create table student(
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT,	 -- 设置主键，非空，自动递增
 	name varchar(32) NOT NULL, --设置姓名非空
@@ -227,33 +229,33 @@ create table student(
 
 ##### 复制表：
 
-```bash
+```mysql
 create table 表名 like 被复制的表名;
 ```
 
 ##### R(Retrieve):查询
 
 * 查询某个数据库中所有的表名称
-		```
+		```mysql
 	show tables;
 	```
 	
 * 查询表结构
 	
-	```
+	```mysql
 	desc 表名;
 	```
 ##### U(Update):修改
 
 * 修改表名
 
-  ```
+  ```mysql
   alter table 表名 rename to 新的表名;
   ```
 
 * 修改表的字符集
 
-  ```bash
+  ```mysql
   alter table 表名 character set 字符集名称;
   
   # 查看表的字符集
@@ -262,13 +264,13 @@ create table 表名 like 被复制的表名;
 
 * 添加一列
 
-  ```bash
+  ```mysql
    alter table 表名 add 列名 数据类型 [完整性约束]; #[为可选项]
   ```
 
 * 修改列名称 类型
 
-  ```
+  ```mysql
   alter table 表名 change 列名 新列名 新数据类型;
   
   alter table 表名 modify 列名 新数据类型;
@@ -276,13 +278,13 @@ create table 表名 like 被复制的表名;
 
 * 删除列
 
-  ```bash
+  ```mysql
   alter table 表名 drop 列名;
   ```
 
 ##### D(Delete):删除
 
-```
+```mysql
 drop table 表名;
 
 drop table  if exists 表名 ;
@@ -294,7 +296,7 @@ drop table  if exists 表名 ;
 
 * 语法：
 	
-	```
+	```mysql
 	insert into 表名(列名1,列名2,...列名n) values(值1,值2,...值n);
 	```
 	
@@ -308,7 +310,7 @@ drop table  if exists 表名 ;
 
 * 语法：
 	
-	```
+	```mysql
 	delete from 表名 [where 条件]
 	```
 	
@@ -316,7 +318,7 @@ drop table  if exists 表名 ;
 	1. 如果不加条件，则删除表中所有记录。
 	
 	2. 如果要删除所有记录
-		```bash
+		```mysql
 		-- 不推荐使用。有多少条记录就会执行多少次删除操作
 		delete from 表名;
 		
@@ -337,7 +339,7 @@ drop table  if exists 表名 ;
 
 ##### 基本语法：
 
-```bash
+```mysql
 select
 	字段列表
 from
@@ -358,7 +360,7 @@ limit
 
 1. 多个字段的查询
 	
-	```
+	```mysql
 	select 字段名1，字段名2, ..., 字段名n from 表名;
 	```
 	
@@ -366,7 +368,7 @@ limit
 	
 2. 去除重复：
 	
-	```
+	```mysql
 	select distinct 字段名 from 表名;
 	```
 	
@@ -380,7 +382,7 @@ limit
 	
 	* as：as也可以省略
 	
-	```
+	```mysql
 	select 字段名 as 别名 from 表名;
 	```
 
@@ -421,7 +423,7 @@ limit
 
 示例：
 
-```bash
+```mysql
 -- 查询年龄大于/大于等于20岁
 SELECT * FROM student WHERE age > 20;
 SELECT * FROM student WHERE age >= 20;

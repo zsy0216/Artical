@@ -45,7 +45,7 @@
 		* where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来
 		* where 后不可以跟聚合函数，having可以进行聚合函数的判断。
 
-	```bash
+	```mysql
 -- 按照性别分组。分别查询男、女同学的平均分
 	
 	SELECT sex , AVG(math) FROM student GROUP BY sex;
@@ -74,7 +74,9 @@ exam：每页显示3条记录
 	`SELECT * FROM student LIMIT 0,3;` -- 第1页
 	
 
-	`SELECT * FROM student LIMIT 3,3; ` -- 第2页
-	
-	SELECT * FROM student LIMIT 6,3;  -- 第3页
+```mysql
+`SELECT * FROM student LIMIT 3,3; ` -- 第2页
+
+SELECT * FROM student LIMIT 6,3;  -- 第3页
+```
 
