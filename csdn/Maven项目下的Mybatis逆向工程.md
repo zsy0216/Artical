@@ -4,6 +4,8 @@
 
 如果是在多模块开发下，该文件逆向工程要生成的那个模块下的pom文件。
 
+==以下配置在`<build>`下级，与`<pluginManagement>`同级==
+
 ```
 <build>
         <plugins>
@@ -38,60 +40,60 @@
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
-  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />
+    <!-- 数据库驱动，若在插件配置时依赖了mysql-connector-java 此处可省略 -->
+    <!--  <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />-->
 
-  <context id="DB2Tables" targetRuntime="MyBatis3">
-    <jdbcConnection driverClass="COM.ibm.db2.jdbc.app.DB2Driver"
-        connectionURL="jdbc:db2:TEST"
-        userId="db2admin"
-        password="db2admin">
-    </jdbcConnection>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 false：否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接驱动、url、用户名、密码 -->
+        <!-- 参考jdbc.properties -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/movie?useUnicode=true&characterEncoding=UTF-8"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
 
-    <javaTypeResolver >
-      <property name="forceBigDecimals" value="false" />
-    </javaTypeResolver>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+        <!-- 生成的java模型的 包名和位置  -->
+        <javaModelGenerator targetPackage="com.film.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成的xml映射文件的 包名和位置  不写此项不会生成xml文件-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成的Dao接口的 包名和位置  不写此项不会生成dao层接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.film.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
 
-    <javaModelGenerator targetPackage="test.model" targetProject="\MBGTestProject\src">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="test.xml"  targetProject="\MBGTestProject\src">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="\MBGTestProject\src">
-      <property name="enableSubPackages" value="true" />
-    </javaClientGenerator>
-
-    <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
-      <property name="useActualColumnNames" value="true"/>
-      <generatedKey column="ID" sqlStatement="DB2" identity="true" />
-      <columnOverride column="DATE_FIELD" property="startDate" />
-      <ignoreColumn column="FRED" />
-      <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
-    </table>
-
-  </context>
+        <!-- 需要生成实体类的表 tableName是数据库的表名或视图名，domainObjectName是生成后的类名  -->
+        <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="DB2" identity="true"/>
+            <columnOverride column="DATE_FIELD" property="startDate"/>
+            <ignoreColumn column="FRED"/>
+            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR"/>
+        </table>
+    </context>
 </generatorConfiguration>
 ```
 
 ## 3.运行mybatis配置文件
 
-![1543136320738](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1543136320738.png)
-
-* 选择右上角运行按钮旁边的三角，选择Edit Configurations
-
-![1543136597734](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1543136597734.png)
-
-1. 点击+号选择maven
-2. 自定义name
-3. 选择项目路径
-4. 输入逆向工程的命令
+点击右侧的Maven->项目名->plugin->mybatis-generator运行即可
 
 ## 4.注： 配置文件详解
 
