@@ -68,3 +68,6 @@ public String testRequestParam(@RequestParam(value="user") String user,@RequestP
     }
 ```
 
+## @ModelAttribute
+
+标记在方法上，会在其他目标方法执行前被SpringMVC调用。

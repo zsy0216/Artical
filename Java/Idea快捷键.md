@@ -1,1 +1,1 @@
-![](https://zsy0216.gitee.io/images/idea/快捷键.png)
+![](https://zsy0216.github.io/image/idea/快捷键.png)
