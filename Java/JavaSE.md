@@ -1,5 +1,7 @@
 [TOC]
 
+
+
 # 常用类
 
 ## 包装类
@@ -526,11 +528,10 @@ public class MyRunable implements Runnable {
 - Proxy：代理角色，内部含有对真实对象`RealSubject`的引用，从而可以操作真实对象。代理对象提供与真实对象相同的接口，以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。
 - Subject : 接口，是对象和它的代理共用的接口，让`RealSubject`和`Proxy`具有一致性。
 
-![](https://upload-images.jianshu.io/upload_images/11247007-677518be6c8bf05c.png?imageMogr2/auto-orient/strip|imageView2/2/w/758/format/webp)
+![](https://zsy0216.github.io//image/java/javase/proxy.webp)
 
 ```java
 package com.tassel.thread;
-
 /**
  * 实现静态代理 公共接口： 1.真实角色（对象） 2.代理角色（对象）
  *
@@ -538,18 +539,17 @@ package com.tassel.thread;
 public class StaticProxy {
 	public static void main(String[] args) {
 		new WeddingCompany(new You()).happyMarry();
-
 		// 类似多进程的
 		// new Thread(线程对象).start();
 	}
 }
 
-// 公共接口
+// 公共接口 结婚
 interface Marry {
 	void happyMarry();
 }
 
-// 真实角色
+// 真实角色 你结婚
 class You implements Marry {
 	@Override
 	public void happyMarry() {
@@ -557,15 +557,12 @@ class You implements Marry {
 	}
 }
 
-// 代理角色
+// 代理角色 婚庆公司
 class WeddingCompany implements Marry {
-
 	private Marry target;
-
 	public WeddingCompany(Marry target) {
 		this.target = target;
 	}
-
 	@Override
 	public void happyMarry() {
 		System.out.println("代理角色：有人要结婚接个活");
@@ -704,3 +701,536 @@ public class LambdaThread {
   - join()
   - IO操作，read，write...
 - 终止状态：线程运行结束，或被终止；
+
+# java.io
+
+## 核心类
+
+| 类           | 说明       |
+| ------------ | ---------- |
+| File         | 文件类     |
+| InputStream  | 字节输入流 |
+| OutputStream | 字节输出流 |
+| Reader       | 字符输入流 |
+| Writer       | 字符输出流 |
+| Closeable    | 关闭流接口 |
+| Flushable    | 刷新流接口 |
+| Serializable | 序列化接口 |
+
+注意：这里输入输出是以程序为中心的，从数据源写到程序中的成为输入流，从程序中写出去的叫输出流
+
+[java8 API](https://docs.oracle.com/javase/8/docs/api/index.html)
+
+## 分类
+
+- 按流动方向：输入流、输出流；
+- 按功能：节点流、处理流（包装流）；处理流是以节点流为基础的
+- 按数据：字节流、字符流；字符流的本质是字节流
+
+## File
+
+[Java8 File API](https://docs.oracle.com/javase/8/docs/api/java/io/File.html)
+
+### Fields
+
+| Modifier and Type | Field               | Description                                                  |
+| :---------------- | ------------------- | :----------------------------------------------------------- |
+| `static String`   | `pathSeparator`     | The system-dependent path-separator character, represented as a string for convenience. |
+| `static char`     | `pathSeparatorChar` | The system-dependent path-separator character.               |
+| `static String`   | `separator`         | The system-dependent default name-separator character, represented as a string for convenience. |
+| `static char`     | `separatorChar`     | The system-dependent default name-separator character.       |
+
+File类的成员变量都是静态常量，其中separatorChar是名称分隔符，用来代替文件路径中的`\`,在不同的系统平台表示不同的含义；
+
+### Constructor 
+
+| Constructor                         | Description                                                  |
+| :---------------------------------- | ------------------------------------------------------------ |
+| `File(File parent, String child)`   | Creates a new `File` instance from a parent abstract pathname and a child pathname string. |
+| `File(String pathname)`             | Creates a new `File` instance by converting the given pathname string into an abstract pathname. |
+| `File(String parent, String child)` | Creates a new `File` instance from a parent pathname string and a child pathname string. |
+| `File(URI uri)`                     | Creates a new `File` instance by converting the given `file:` URI into an abstract pathname. |
+
+### 相对路径和绝对路径
+
+- 绝对路径是指目录下的绝对位置，直接到达目标位置，通常是从盘符开始的路径。
+- 相对路径是相对于当前文件所在目录与其他文件的路径关系；
+
+### 常用方法
+
+| Methods                                                   | Description                                    |
+| --------------------------------------------------------- | ---------------------------------------------- |
+| `getName()`,`getPath()`,`getAbsolutePath()`,`getParent()` | 得到名称或路径                                 |
+| `exists`,`isFile`,`isDirectory`                           | 是否存在？是文件？文件夹？                     |
+| `length()`                                                | 表示文件的长度（字节数）                       |
+| `createNewFile()`,`delete()`                              | 创建新文件(不存在创建，存在返回true)，删除文件 |
+
+对于length()方法，如果判断的File对象是文件夹时返回为0；如果文件不存在时也返回0；
+
+而对于文件夹的大小则需要通过递归遍历来完成；
+
+**操作目录的方法**：
+
+| Methods       | Description                                  |
+| ------------- | -------------------------------------------- |
+| `mkdir()`     | 创建目录，确保上级目录存在，不存在创建失败； |
+| `mkdirs()`    | 上级目录不存在一同创建                       |
+| `list()`      | 列出下级名称                                 |
+| `listFiles()` | 列出下级File对象                             |
+| `listRoot()`  | 列出所有盘符                                 |
+
+递归遍历目录统计文件夹的大小（所有层级文件的大小）
+
+```java
+public class CountDirectory {
+	public static void main(String[] args) {
+		File src = new File("D:/2345/Downloads");
+		count(src);
+		System.out.println(len);
+	}
+
+	private static long len = 0;
+
+	public static void count(File src) {
+		if (null != src && src.exists()) {
+			if (src.isFile()) { // 大小
+				len += src.length();
+			} else { // 子孙级
+				for (File f : src.listFiles()) {
+					count(f);
+				}
+			}
+		}
+	}
+}
+```
+
+### 文件编码
+
+编码(encode)：字符->字节
+
+解码(decode)：字节->字符
+
+**乱码原因：**
+
+- 字节数不够
+- 字符集不统一
+
+## 四大抽象类
+
+| 抽象类         | 说明                             | 常用方法                                           |
+| -------------- | -------------------------------- | -------------------------------------------------- |
+| `InputStream`  | 字节输入流的父类，数据单位为字节 | `int read()`,`void close()`                        |
+| `outputStream` | 字节输出流的父类，数据单位为字节 | `void write(int)`,`void flush()`,`void close()`    |
+| `Reader`       | 字符输入流的父类，数据单位       | `int read()`,`void close()`                        |
+| `Writer`       | 字符输出流的父类，数据单位为字符 | `void write(String)`,`void flush()`,`void close()` |
+
+## IO流操作步骤
+
+1. 创建源
+2. 选择流
+3. 操作（读、写）
+4. 释放系统资源
+
+**文件与字节数组之间的转化**
+
+1.文件—>程序—>字节数组
+
+* 文件输入流，字节数组输出流
+
+2.字节数组—>程序—->文件
+
+* 字节数组输入流，文件输出流
+
+### 文件字节输入流
+
+```java
+	    // 1.创建源
+		File src = new File("D:/a.txt");
+		// 2.选择流 文件字节输入流
+		InputStream is = null;
+		try {
+			is = new FileInputStream(src);
+			// 3.操作(读取)
+			int temp;
+			while ((temp = is.read()) != -1) { // 当读到最后一个字节时返回-1
+				System.out.println((char) temp); // 转字节为字符
+			}
+		} catch (FileNotFoundException e) { // fileInputStream()
+			e.printStackTrace();
+		} catch (IOException e) { // read()
+			e.printStackTrace();
+		} finally {
+			if (null != is) {
+				try {
+					// 4. 释放资源
+					is.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+```
+
+### 文件字节输出流
+
+```java
+		// 1.创建源
+		File dest = new File("dest.txt");
+		// 2.选择流：文件字节输出流
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(dest); //可以传入第二个参数，true代表追加
+			// 3.操作(写出)
+			String msg = "This is a test file for OutStreamTest Class.";
+			byte[] datas = msg.getBytes();// 编码
+			os.write(datas, 0, datas.length);// 传入数据长度
+			os.flush(); // 写出后刷新
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (null != os) {
+				try {
+					// 4. 释放资源
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+```
+
+### 字节数组输入流
+
+释放资源 可以不用处理close是空方法
+
+```java
+		//1、创建源
+		byte[] src = "talk is cheap show me the code".getBytes();
+		//2、选择流
+		InputStream  is =null;
+		try {
+			is =new ByteArrayInputStream(src);
+			//3、操作 (分段读取)
+			byte[] flush = new byte[5]; //缓冲容器
+			int len = -1; //接收长度
+			while((len=is.read(flush))!=-1) {
+				//字节数组-->字符串 (解码)
+				String str = new String(flush,0,len);
+				System.out.println(str);
+			}		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			//4、释放资源 可以不用处理close是空方法
+			try {
+				if(null!=is) {
+					is.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+```
+
+### 字节数组输出流
+
+可以不用创建源，类内部维护；
+
+选择流：`ByteArrayOutputStream`不用关联源；
+
+可以不用释放资源，close()是空方法；
+
+```java
+		//1、创建源  内部维护不用创建
+		byte[] dest =null;
+		//2、选择流 （新增方法） 不关联源
+		ByteArrayOutputStream baos =null;
+		try {
+			baos = new ByteArrayOutputStream();
+			//3、操作(写出)
+			String msg ="show me the code";
+			byte[] datas =msg.getBytes(); // 字符串-->字节数组(编码)
+			baos.write(datas,0,datas.length);
+			baos.flush();
+			//获取数据
+			dest = baos.toByteArray();
+			System.out.println(dest.length +"-->"+new String(dest,0,baos.size()));
+		}catch(FileNotFoundException e) {		
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			//4、释放资源 可以不用 close是空方法
+			try {
+				if (null != baos) {
+					baos.close();
+				} 
+			} catch (Exception e) {
+			}
+		}
+```
+
+**示例：文件与字节数组的转化**
+
+```java
+public class IOTest {
+	public static void main(String[] args) {
+		//图片转成字节数组
+		byte[] datas = fileToByteArray("p.png");
+		System.out.println(datas.length);
+		byteArrayToFile(datas,"p-byte.png");		
+	}
+	/**
+	 * 1、图片读取到字节数组
+	 * 1)、图片到程序  FileInputStream
+	 * 2)、程序到字节数组	ByteArrayOutputStream
+	 */
+	public static byte[] fileToByteArray(String filePath) {
+		//1、创建源与目的地
+		File src = new File(filePath);
+		byte[] dest =null;
+		//2、选择流
+		InputStream  is =null;
+		ByteArrayOutputStream baos =null;
+		try {
+			is =new FileInputStream(src);
+			baos = new ByteArrayOutputStream();
+			//3、操作 (分段读取)
+			byte[] flush = new byte[1024*10]; //缓冲容器
+			int len = -1; //接收长度
+			while((len=is.read(flush))!=-1) {
+				baos.write(flush,0,len);		 //写出到字节数组中			
+			}		
+			baos.flush();
+			return baos.toByteArray();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			//4、释放资源
+			try {
+				if(null!=is) {
+					is.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;		
+	}
+	/**
+	 * 2、字节数组写出到图片
+	 * 1)、字节数组到程序 ByteArrayInputStream
+	 * 2)、程序到文件 FileOutputStream
+	 */
+	public static void byteArrayToFile(byte[] src,String filePath) {
+		//1、创建源
+		File dest = new File(filePath);
+		//2、选择流
+		InputStream  is =null;
+		OutputStream os =null;
+		try {
+			is =new ByteArrayInputStream(src);
+			os = new FileOutputStream(dest);
+			//3、操作 (分段读取)
+			byte[] flush = new byte[5]; //缓冲容器
+			int len = -1; //接收长度
+			while((len=is.read(flush))!=-1) {
+				os.write(flush,0,len);			//写出到文件	
+			}		
+			os.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			//4、释放资源
+			try {
+				if (null != os) {
+					os.close();
+				} 
+			} catch (Exception e) {
+			}
+		}
+	}
+}
+```
+
+## 装饰器设计模式
+
+装饰器设计模式在IO中主要用于上面分类中的处理流，即下面即将介绍的各种处理流，起装饰作用；
+
+装饰器设计模式由四部分组成
+
+- 抽象组件：需要装饰的抽象对象，（接口或抽象类）
+- 具体组件：实现抽象组件，需要装饰的对象；
+- 抽象装饰类：实现抽象组件，包含了对抽象组件的引用，并声明装饰方法；
+- 具体装饰类：继承抽象装饰类，实现抽象方法，可以有多个；
+
+**示例：**
+
+```java
+/**
+ * 装饰器设计模式：咖啡模拟，修饰器 牛奶、糖、 
+ * 1、抽象组件:需要装饰的抽象对象(接口或抽象父类) 饮品
+ * 2、具体组件:需要装饰的对象 咖啡
+ * 3、抽象装饰类:包含了对抽象组件的引用以及装饰着共有的方法 
+ * 4、具体装饰类:被装饰的对象 糖、牛奶
+ * @author Tassel
+ */
+public class DecorateTest {
+	public static void main(String[] args) {
+		Drink coffee = new Coffee(); //原味牛奶
+		System.out.println(coffee.info() + coffee.price());
+		
+		Drink milkCoffee  = new Milk(coffee); // 加牛奶
+		System.out.println(milkCoffee.info() + milkCoffee.price());
+		
+		Drink sugerCoffee = new Suger(coffee); // 加糖
+		System.out.println(sugerCoffee.info() + sugerCoffee.price());
+	}
+}
+
+// 1.抽象组件：饮品
+interface Drink {
+	double price(); //价格
+	String info(); //说明
+}
+
+//2.具体组件: 咖啡
+class Coffee implements Drink {
+	private String name = "原味咖啡";
+	@Override
+	public double price() {
+		return 10;
+	}
+	@Override
+	public String info() {
+		return name;
+	}
+}
+
+//3. 抽象装饰类
+abstract class DrinkDecorate implements Drink {
+	//对抽象组件的引用
+	private Drink drink;
+	public DrinkDecorate (Drink drink) {
+		this.drink = drink;
+	}
+	@Override
+	public double price() {
+		return this.drink.price();
+	}
+	@Override
+	public String info() {
+		return this.drink.info();
+	}
+}
+
+//4.1 具体装饰类 : 牛奶
+class Milk extends DrinkDecorate {
+	public Milk(Drink drink) {
+		super(drink);
+	}
+	@Override
+	public double price() {
+		return super.price()*4;
+	}
+	@Override
+	public String info() {
+		return super.info() + "加入了牛奶装饰";
+	}
+}
+
+//4.2 具体装饰类 : 糖
+class Suger extends DrinkDecorate {
+	public Suger(Drink drink) {
+		super(drink);
+	}
+	@Override
+	public double price() {
+		return super.price()*2;
+	}
+	@Override
+	public String info() {
+		return super.info() + "加入了糖装饰";
+	}
+}
+```
+
+## 字节缓冲流
+
+### 构造方法
+
+- `public BufferedInputStream(InputStream in)` ：创建一个 新的缓冲输入流。 
+- `public BufferedOutputStream(OutputStream out)`： 创建一个新的缓冲输出流。
+
+构造举例，代码如下：
+
+```java
+// 创建字节缓冲输入流
+BufferedInputStream bis = new BufferedInputStream(new FileInputStream("bis.txt"));
+// 创建字节缓冲输出流
+BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("bos.txt"));
+```
+
+## 字符缓冲流
+
+### 构造方法
+
+- `public BufferedReader(Reader in)` ：创建一个 新的缓冲输入流。 
+- `public BufferedWriter(Writer out)`： 创建一个 新的缓冲输出流。
+
+构造举例，代码如下：
+
+```java
+// 创建字符缓冲输入流
+BufferedReader br = new BufferedReader(new FileReader("br.txt"));
+// 创建字符缓冲输出流
+BufferedWriter bw = new BufferedWriter(new FileWriter("bw.txt"));
+```
+
+### 特有方法
+
+字符缓冲流的基本方法与普通字符流调用方式一致，不再阐述，我们来看它们具备的特有方法。
+
+- BufferedReader：`public String readLine()`: 读一行文字。 
+- BufferedWriter：`public void newLine()`: 写一行行分隔符,由系统属性定义符号。 
+
+## 转换流
+
+### `InputStreamReader`类  
+
+转换流`java.io.InputStreamReader`，是Reader的子类，是从字节流到字符流的桥梁。它读取字节，并使用指定的字符集将其解码为字符。它的字符集可以由名称指定，也可以接受平台的默认字符集。 
+
+**构造方法**
+
+- `InputStreamReader(InputStream in)`: 创建一个使用默认字符集的字符流。 
+- `InputStreamReader(InputStream in, String charsetName)`: 创建一个指定字符集的字符流。
+
+构造举例，代码如下： 
+
+```java
+InputStreamReader isr = new InputStreamReader(new FileInputStream("in.txt"));
+InputStreamReader isr2 = new InputStreamReader(new FileInputStream("in.txt") , "GBK");
+```
+
+### `OutputStreamWriter`类
+
+转换流`java.io.OutputStreamWriter` ，是Writer的子类，是从字符流到字节流的桥梁。使用指定的字符集将字符编码为字节。它的字符集可以由名称指定，也可以接受平台的默认字符集。 
+
+**构造方法**
+
+- `OutputStreamWriter(OutputStream in)`: 创建一个使用默认字符集的字符流。 
+- `OutputStreamWriter(OutputStream in, String charsetName)`: 创建一个指定字符集的字符流。
+
+构造举例，代码如下： 
+
+```java
+OutputStreamWriter isr = new OutputStreamWriter(new FileOutputStream("out.txt"));
+OutputStreamWriter isr2 = new OutputStreamWriter(new FileOutputStream("out.txt") , "GBK");
+```
+
