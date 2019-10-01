@@ -528,7 +528,7 @@ public class MyRunable implements Runnable {
 - Proxy：代理角色，内部含有对真实对象`RealSubject`的引用，从而可以操作真实对象。代理对象提供与真实对象相同的接口，以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。
 - Subject : 接口，是对象和它的代理共用的接口，让`RealSubject`和`Proxy`具有一致性。
 
-![](https://zsy0216.github.io//image/java/javase/proxy.webp)
+![](https://zsy0216.github.io/image/java/javase/proxy)
 
 ```java
 package com.tassel.thread;
@@ -1083,7 +1083,7 @@ public class IOTest {
  */
 public class DecorateTest {
 	public static void main(String[] args) {
-		Drink coffee = new Coffee(); //原味牛奶
+		Drink coffee = new Coffee(); //原味咖啡
 		System.out.println(coffee.info() + coffee.price());
 		
 		Drink milkCoffee  = new Milk(coffee); // 加牛奶

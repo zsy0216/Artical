@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # Java基础
 
 ## JDK和JRE有什么区别？
@@ -670,11 +674,13 @@ public synchronized static void add() {}
 
 ## 什么是反射？
 
-反射主要是指程序可以访问、检测和修改它本身状态或行为的一种能力；
+反射主要是指程序可以访问、检测和修改它本身状态或行为的一种能力。
 
-Java反射：
+Java反射：运行中的程序检查自己和软件运行环境的能力，它可以根据它发现的进行改变。通俗的讲，就是反射可以在运行时根据指定的类型获得类的信息。
 
-在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用它的任意一个方法
+在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用它的任意一个方法？
+
+Java反射的根源是Class类，每一个类，接口，注解，基本数据类型等，在被加载后都会创建一个Class对象，类的整个结构信息（属性、方法、构造器等）会放到对应的Class对象中，每个类都只会加载一次。
 
 Java反射机制主要提供了以下功能：
 
@@ -682,6 +688,61 @@ Java反射机制主要提供了以下功能：
 - 在运行时构造任意一个类的对象。
 - 在运行时判断任意一个类所具有的成员变量和方法。
 - 在运行时调用任意一个对象的方法。 
+
+**怎么使用反射：反射中的常用方法：**
+
+```java
+Class clazz = Class.forName("com.java.test.User");
+```
+
+说明：forName中的参数是类的全类名，即包名+类名；
+
+```java
+User user = (User)clazz.newInstance()  //创建对象的实例
+```
+
+说明：上面的方法可以获得一个具体类的实例对象，根据该对象可以来进行各种操作；
+
+**根据反射获得类的构造器：**
+
+```java
+//根据指定参数获得public构造器
+Constructor getConstructor(Class... paramterTypes)  //...代表可变参数
+//获得public的所有构造器
+Constructor[] getConstructors()
+//根据指定参数获得public和非public的构造器
+Constructor getDeclaredConstructor(Class... paramterTypes)
+//获得public和非public的所有构造器
+Constructor[] getDeclaredConstructors()
+```
+
+**根据反射获得类的方法：**
+
+```java
+//根据方法名，参数类型获得方法
+Method getMethod(String name, Class... paramterTypes)
+//获得所有的public方法
+Method[] getMethods()
+//根据方法名和参数类型，获得public和非public的方法
+Method getDeclaredMethod(String name, Class... paramterTypes)
+//获得所有的public和非public方法
+Method[] getDeclaredMethods()
+```
+
+**根据反射获得类的属性：**
+
+```java
+//根据变量名得到相应的public变量
+Field getField(String name)
+//获得类中所有public的变量
+Field[] getFields()
+//根据方法名获得public和非public变量
+Field getDeclaredField(String name)
+//获得类中所有的public和非public变量
+Field[] getDeclaredFields()
+```
+
+
 
 ## 什么是 java 序列化？什么情况下需要序列化？
 
@@ -854,7 +915,7 @@ CSRF 攻击之所以能够成功，是因为黑客可以完全伪造用户的请
 - finally一般作用在try-catch代码块中，在处理异常的时候，通常我们将一定要执行的代码方法finally代码块中，表示不管是否出现异常，该代码块都会执行，一般用来存放一些关闭资源的代码。
 - finalize是一个方法，属于Object类的一个方法，而Object类是所有类的父类，该方法一般由垃圾回收器来调用，当我们调用System的gc()方法的时候，由垃圾回收器调用finalize(),回收垃圾。 
 
-**76. try-catch-finally 中哪个部分可以省略？**
+## try-catch-finally 中哪个部分可以省略？
 
 答：catch 可以省略
 
@@ -865,3 +926,634 @@ CSRF 攻击之所以能够成功，是因为黑客可以完全伪造用户的请
 理论上，编译器看任何代码都不顺眼，都觉得可能有潜在的问题，所以你即使对所有代码加上try，代码在运行期时也只不过是在正常运行的基础上加一层皮。但是你一旦对一段代码加上try，就等于显示地承诺编译器，对这段代码可能抛出的异常进行捕获而非向上抛出处理。如果是普通异常，编译器要求必须用catch捕获以便进一步处理；如果运行时异常，捕获然后丢弃并且+finally扫尾处理，或者加上catch捕获以便进一步处理。
 
 至于加上finally，则是在不管有没捕获异常，都要进行的“扫尾”处理。
+
+## try-catch-finally 中，如果 catch 中 return 了，finally 还会执行吗？
+
+答：会执行，在 return 前执行。
+
+## 常见的异常类有哪些？
+
+- NullPointerException：当应用程序试图访问空对象时，则抛出该异常。
+- SQLException：提供关于数据库访问错误或其他错误信息的异常。
+- IndexOutOfBoundsException：指示某排序索引（例如对数组、字符串或向量的排序）超出范围时抛出。 
+- NumberFormatException：当应用程序试图将字符串转换成一种数值类型，但该字符串不能转换为适当格式时，抛出该异常。
+- FileNotFoundException：当试图打开指定路径名表示的文件失败时，抛出此异常。
+- IOException：当发生某种I/O异常时，抛出此异常。此类是失败或中断的I/O操作生成的异常的通用类。
+- ClassCastException：当试图将对象强制转换为不是实例的子类时，抛出该异常。
+- ArrayStoreException：试图将错误类型的对象存储到一个对象数组时抛出的异常。
+- IllegalArgumentException：抛出的异常表明向方法传递了一个不合法或不正确的参数。
+- ArithmeticException：当出现异常的运算条件时，抛出此异常。例如，一个整数“除以零”时，抛出此类的一个实例。 
+- NegativeArraySizeException：如果应用程序试图创建大小为负的数组，则抛出该异常。
+- NoSuchMethodException：无法找到某一特定方法时，抛出该异常。
+- SecurityException：由安全管理器抛出的异常，指示存在安全侵犯。
+- UnsupportedOperationException：当不支持请求的操作时，抛出该异常。
+- RuntimeExceptionRuntimeException：是那些可能在Java虚拟机正常运行期间抛出的异常的超类。
+
+# 网络模块
+
+## http响应吗301和302代表什么及其区别
+
+301、302都是HTTP状态的编码，都代表着某个URL发生了转移；
+
+**区别**：
+
+- 301 redirect：301代表永久性转移（Permanently Moved）；
+- 302 redirect：302代表暂时性转移（Temporarily Moved）；
+
+## forward和redirect的区别
+
+Forward和Redirect代表了两种请求转发方式：直接转发和间接转发。
+
+**直接转发方式（Forward）**，客户端和浏览器只发出一次请求，Servlet、HTML、JSP或其它信息资源，由第二个信息资源响应该请求，在请求对象request中，保存的对象对于每个信息资源是共享的。
+
+**间接转发方式（Redirect）**实际是两次HTTP请求，服务器端在响应第一次请求的时候，让浏览器再向另外一个URL发出请求，从而达到转发的目的。
+
+**举个通俗的例子：**
+
+直接转发就相当于：“A找B借钱，B说没有，B去找C借，借到借不到都会把消息传递给A”；　
+
+间接转发就相当于："A找B借钱，B说没有，让A去找C借"。
+
+##  简述 tcp 和 udp的区别？
+
+- TCP面向连接（如打电话要先拨号建立连接）;UDP是无连接的，即发送数据之前不需要建立连接。
+- TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付。
+- Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。
+- UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。
+- 每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信。
+- TCP对系统资源要求较多，UDP对系统资源要求较少。
+
+## tcp 为什么要三次握手，两次不行吗？为什么？
+
+为了实现可靠数据传输， TCP 协议的通信双方， 都必须维护一个序列号， 以标识发送出去的数据包中， 哪些是已经被对方收到的。 三次握手的过程即是通信双方相互告知序列号起始值， 并确认对方已经收到了序列号起始值的必经步骤。
+
+如果只是两次握手， 至多只有连接发起方的起始序列号能被确认， 另一方选择的序列号则得不到确认。
+
+## get 和 post 请求有哪些区别？
+
+- GET在浏览器回退时是无害的，而POST会再次提交请求。
+- GET产生的URL地址可以被Bookmark，而POST不可以。
+- GET请求会被浏览器主动cache，而POST不会，除非手动设置。
+- GET请求只能进行url编码，而POST支持多种编码方式。
+- GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+- GET请求在URL中传送的参数是有长度限制的，而POST没有。
+- 对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
+- GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
+- GET参数通过URL传递，POST放在Request body中。
+
+# 设计模式
+
+## <font color="red">单例模式</font>
+
+简单点说，就是一个应用程序中，某个类的实例对象只有一个，你没有办法去new，因为构造器是被private修饰的，一般通过getInstance()方法来获取它们的实例；
+
+1.构造方法私有化；2.实例化的变量引用私有化；3.获取实例的方法公有
+
+getInstance()的返回值是一个对象的引用，并不是一个新的实例，所以不要错误的理解成多个对象。
+
+单例模式的实现：
+
+```java
+public class Singleton {
+	private static Singleton singleton;
+    
+    private Singleton() {
+    }
+    public static Singleton getInstance(){
+    	if(singleton == null){
+        	singleton = new Singleton();
+        }
+        return singleton;
+    }
+}
+```
+
+这是最基本的写法，也叫懒汉式写法（线程不安全），下面再介绍几种单例模式的实现方法：
+
+**懒汉式写法（线程安全）**
+
+```java
+public class Singleton {
+	private static Singleton instance;
+
+	private Singleton() {
+	}
+	public static synchronized Singleton getInstance() {
+		if (instance == null) {
+			instance = new Singleton();
+		}
+		return instance;
+	}
+}
+```
+
+**饿汉式写法**
+
+```java
+public class Singleton {
+	private static Singleton instance = new Singleton();
+
+	private Singleton() {
+	}
+	public static Singleton getInstance() {
+		return instance;
+	}
+}
+```
+
+**静态内部类**
+
+```java
+public class Singleton {
+	private static class SingletonHolder {
+    	private static final Singleton INSTANCE = new Singleton();
+    }
+    private Singleton() {
+    }
+    public static final Singleton getInstance() {
+    	return SingletonHolder.INSTANCE;
+    }
+}
+```
+
+**枚举**
+
+```java
+public enum Singleton {
+    INSTANCE;
+    public Singleton getInstance(){
+        return INSTANCE;
+    }
+}
+```
+
+这种方式是《Effective Java》作者Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象，可谓是很坚强的壁垒啊，
+
+> 单元素的枚举类型已经成为实现Singleton的最佳方法。
+
+**双重校验锁**
+
+```java
+public class Singleton {
+	private volatile static Singleton singleton;
+    
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+    	if(singleton == null) {
+        	synchronized(Singleton.class) {
+        		if(singleton == null) {
+                	singleton == new Singleton();
+                }
+       	 	}
+        }
+        return singleton;
+    }
+}
+```
+
+## <font color="red">观察者模式</font>
+
+在对象之间定义了一对多的依赖，这样一来，当一个对象改变状态，依赖它的对象会收到通知并自动更新。
+
+其实就是发布订阅模式，发布者发布信息，订阅者获取信息，订阅了就能收到信息，没订阅就收不到信息。
+
+![observer](https://zsy0216.github.io/image/java/javase/javases/observer.png)
+
+- **抽象被观察者角色**：也就是一个抽象主题，它把所有对观察者对象的引用保存在一个集合中，每个主题都可以有任意数量的观察者。抽象主题提供一个接口，可以增加和删除观察者角色。一般用一个抽象类和接口来实现。
+- **抽象观察者角色**：为所有的具体观察者定义一个接口，在得到主题通知时更新自己。
+- **具体被观察者角色**：也就是一个具体的主题，在集体主题的内部状态改变时，所有登记过的观察者发出通知。
+- **具体观察者角色**：实现抽象观察者角色所需要的更新接口，一边使本身的状态与制图的状态相协调。
+
+小结：
+
+- 这个模式是松偶合的。改变主题或观察者中的一方，另一方不会受到影像。
+- JDK中也有自带的观察者模式。但是被观察者是一个类而不是接口，限制了它的复用能力。
+- 在JavaBean和Swing中也可以看到观察者模式的影子。
+
+## <font color="red">装饰者模式</font>
+
+介绍：对已有的业务逻辑进一步的封装，使其增加额外的功能，Java中的IO流就是用了装饰者模式，用户在使用的时候，可以任意组装，达到自己想要的效果。
+
+装饰者模式由四部分组成
+
+- 抽象组件：需要装饰的抽象对象，（接口或抽象类）
+- 具体组件：实现抽象组件，需要装饰的对象；
+- 抽象装饰类：实现抽象组件，包含了对抽象组件的引用，并声明装饰方法；
+- 具体装饰类：继承抽象装饰类，实现抽象方法，可以有多个；
+
+**示例：**
+
+```java
+/**
+ * 装饰器设计模式：咖啡模拟，修饰器 牛奶、糖、 
+ * 1、抽象组件:需要装饰的抽象对象(接口或抽象父类) 饮品
+ * 2、具体组件:需要装饰的对象 咖啡
+ * 3、抽象装饰类:包含了对抽象组件的引用以及装饰着共有的方法 
+ * 4、具体装饰类:被装饰的对象 糖、牛奶
+ * @author Tassel
+ */
+public class DecorateTest {
+	public static void main(String[] args) {
+		Drink coffee = new Coffee(); //原味咖啡
+		System.out.println(coffee.info() + coffee.price());
+		
+		Drink milkCoffee  = new Milk(coffee); // 加牛奶
+		System.out.println(milkCoffee.info() + milkCoffee.price());
+		
+		Drink sugerCoffee = new Suger(coffee); // 加糖
+		System.out.println(sugerCoffee.info() + sugerCoffee.price());
+	}
+}
+
+// 1.抽象组件：饮品
+interface Drink {
+	double price(); //价格
+	String info(); //说明
+}
+
+//2.具体组件: 咖啡
+class Coffee implements Drink {
+	private String name = "原味咖啡";
+	@Override
+	public double price() {
+		return 10;
+	}
+	@Override
+	public String info() {
+		return name;
+	}
+}
+
+//3. 抽象装饰类
+abstract class DrinkDecorate implements Drink {
+	//对抽象组件的引用
+	private Drink drink;
+	public DrinkDecorate (Drink drink) {
+		this.drink = drink;
+	}
+	@Override
+	public double price() {
+		return this.drink.price();
+	}
+	@Override
+	public String info() {
+		return this.drink.info();
+	}
+}
+
+//4.1 具体装饰类 : 牛奶
+class Milk extends DrinkDecorate {
+	public Milk(Drink drink) {
+		super(drink);
+	}
+	@Override
+	public double price() {
+		return super.price()*4;
+	}
+	@Override
+	public String info() {
+		return super.info() + "加入了牛奶装饰";
+	}
+}
+
+//4.2 具体装饰类 : 糖
+class Suger extends DrinkDecorate {
+	public Suger(Drink drink) {
+		super(drink);
+	}
+	@Override
+	public double price() {
+		return super.price()*2;
+	}
+	@Override
+	public String info() {
+		return super.info() + "加入了糖装饰";
+	}
+}
+```
+
+## <font color="red">适配器模式</font>
+
+将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。
+
+**角色：**
+
+**Target（目标抽象类）**：目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类；
+
+**Adapter（适配器类）**：适配器可以调用另一个接口，作为一个转换器，对Adaptee和Target进行适配，适配器类时适配器模式的核心，在对象适配器中，它通过继承Target并关联一个Adaptee对象使二者产生联系；
+
+**Adaptee（适配者类）**：适配者即被适配的角色，它定义了一个已经存在的接口，这个接口需要适配，适配者类一般是一个具体类，包含了客户希望使用的业务方法，在某些情况下可能没有适配者类的源代码。
+
+**示例：类适配器**
+
+```java
+//适配者类
+public class Adaptee {
+    public void adapteeRequest() {
+        System.out.println("被适配者的方法");
+    }
+}
+```
+
+```java
+//目标接口
+public interface Target {
+    void request();
+}
+```
+
+```java
+public class Adapter extends Adaptee implements Target{
+    @Override
+    public void request() {
+        // 其他操作...
+        super.adapteeRequest();
+        // 其他操作...
+    }
+}
+```
+
+**示例：对象适配器**
+
+对象适配器与类适配器不同之处在于，类适配器通过继承来完成适配，对象适配器则是通过关联来完成，这里稍微修改一下 `Adapter` 类即可将转变为对象适配器。
+
+```java
+public class Adapter implements Target{
+    // 适配者是对象适配器的一个属性
+    private Adaptee adaptee = new Adaptee();
+
+    @Override
+    public void request() {
+        // 其他操作...
+        adaptee.adapteeRequest();
+        // 其他操作...
+    }
+}
+```
+
+## <font color="red">静态代理模式</font>
+
+- RealSubject：真实角色，是实现抽象接口的类。
+- Proxy：代理角色，内部含有对真实对象`RealSubject`的引用，从而可以操作真实对象。代理对象提供与真实对象相同的接口，以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。
+- Subject : 接口，是对象和它的代理共用的接口，让`RealSubject`和`Proxy`具有一致性。
+
+![](https://zsy0216.github.io/image/java/javase/proxy)
+
+```java
+package com.tassel.thread;
+/**
+ * 实现静态代理 公共接口： 1.真实角色（对象） 2.代理角色（对象）
+ *
+ */
+public class StaticProxy {
+	public static void main(String[] args) {
+		new WeddingCompany(new You()).happyMarry();
+		// 类似多进程的
+		// new Thread(线程对象).start();
+	}
+}
+
+// 公共接口 结婚
+interface Marry {
+	void happyMarry();
+}
+
+// 真实角色 你结婚
+class You implements Marry {
+	@Override
+	public void happyMarry() {
+		System.out.println("真实角色：我要结婚");
+	}
+}
+
+// 代理角色 婚庆公司
+class WeddingCompany implements Marry {
+	private Marry target;
+	public WeddingCompany(Marry target) {
+		this.target = target;
+	}
+	@Override
+	public void happyMarry() {
+		System.out.println("代理角色：有人要结婚接个活");
+		target.happyMarry();
+		System.out.println("代理角色：人家结完婚了，咱该走了");
+	}
+}
+```
+
+## <font color="red">工厂模式</font>
+
+**简单工厂模式**：一个抽象的接口，多个抽象接口的实现类，一个工厂类，用来实例化抽象的接口
+
+```java
+package com.tassel.designmodel;
+public class TestFactory {
+	public static void main(String[] args) {
+		Car car = Factory.getCarInstance("Benz");
+		if (car != null) {
+			car.run();
+			car.stop();
+		} else {
+			System.out.println("不存在此品牌车辆！");
+		}
+	}
+}
+
+abstract interface Car {
+	public void run();
+
+	public void stop();
+}
+
+// 具体实现类
+class Benz implements Car {
+	public void run() {
+		System.out.println("Benz开始启动了。。。。。");
+	}
+	public void stop() {
+		System.out.println("Benz停车了。。。。。");
+	}
+}
+
+class Ford implements Car {
+	public void run() {
+		System.out.println("Ford开始启动了。。。");
+	}
+	public void stop() {
+		System.out.println("Ford停车了。。。。");
+	}
+}
+
+// 工厂类
+class Factory {
+	public static Car getCarInstance(String type) {
+		Car car = null;
+		if ("Benz".equals(type)) {
+			car = new Benz();
+		}
+		if ("Ford".equals(type)) {
+			car = new Ford();
+		}
+		return car;
+	}
+}
+```
+
+**工厂方法模式**：有四个角色，抽象工厂模式，具体工厂模式，抽象产品模式，具体产品模式。不再是由一个工厂类去实例化具体的产品，而是由抽象工厂的子类去实例化产品;
+
+```java
+// 抽象产品角色
+public interface Moveable {
+	void run();
+}
+
+// 具体产品角色
+public class Plane implements Moveable {
+	@Override
+	public void run() {
+		System.out.println("plane....");
+	}
+}
+
+public class Broom implements Moveable {
+	@Override
+	public void run() {
+		System.out.println("broom.....");
+	}
+}
+
+// 抽象工厂
+public abstract class VehicleFactory {
+	abstract Moveable create();
+}
+
+// 具体工厂
+public class PlaneFactory extends VehicleFactory {
+	public Moveable create() {
+		return new Plane();
+	}
+}
+
+public class BroomFactory extends VehicleFactory {
+	public Moveable create() {
+		return new Broom();
+	}
+}
+
+// 测试类
+public class Test {
+	public static void main(String[] args) {
+		VehicleFactory factory = new BroomFactory();
+		Moveable m = factory.create();
+		m.run();
+	}
+}
+```
+
+**抽象工厂模式**：与工厂方法模式不同的是，工厂方法模式中的工厂只生产单一的产品，而抽象工厂模式中的工厂生产多个产品
+
+```java
+// 抽象工厂类
+public abstract class AbstractFactory {
+	public abstract Vehicle createVehicle();
+
+	public abstract Weapon createWeapon();
+
+	public abstract Food createFood();
+}
+
+// 具体工厂类，其中Food,Vehicle，Weapon是抽象类，
+public class DefaultFactory extends AbstractFactory {
+	@Override
+	public Food createFood() {
+		return new Apple();
+	}
+
+	@Override
+	public Vehicle createVehicle() {
+		return new Car();
+	}
+
+	@Override
+	public Weapon createWeapon() {
+		return new AK47();
+	}
+}
+
+// 测试类
+public class Test {
+	public static void main(String[] args) {
+		AbstractFactory f = new DefaultFactory();
+		Vehicle v = f.createVehicle();
+		v.run();
+		Weapon w = f.createWeapon();
+		w.shoot();
+		Food a = f.createFood();
+		a.printName();
+	}
+}
+```
+
+## 简单工厂和抽象工厂的区别
+
+**简单工厂模式：**
+
+这个模式本身很简单而且使用在业务较简单的情况下。一般用于小项目或者具体产品很少扩展的情况（这样工厂类才不用经常更改）。
+
+它由三种角色组成：
+
+- 工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑，根据逻辑不同，产生具体的工厂产品。如例子中的Driver类。
+- 抽象产品角色：它一般是具体产品继承的父类或者实现的接口。由接口或者抽象类来实现。如例中的Car接口。
+- 具体产品角色：工厂类所创建的对象就是此角色的实例。在java中由一个具体类实现，如例子中的Benz、Bmw类。
+
+来用类图来清晰的表示下的它们之间的关系：
+
+![simplefactory](https://zsy0216.github.io/image/java/javase/javases/simplefactory.png)
+
+**抽象工厂模式：**
+
+先来认识下什么是产品族： 位于不同产品等级结构中，功能相关联的产品组成的家族。
+
+![abstractfactory](https://zsy0216.github.io/image/java/javase/javases/abstractfactory.png)
+
+图中的ProductA和ProductB就是两个产品树（产品层次结构）；而如图所示的ProductA1和ProductB1就是一个产品族。他们都可以放到Factory1中，因此功能有所关联。同理PorductA2和ProductB2也是一个产品族。
+
+**可以这么说，它和工厂方法模式的区别就在于需要创建对象的复杂程度上。而且抽象工厂模式是三个里面最为抽象、最具一般性的。抽象工厂模式的用意为：给客户端提供一个接口，可以创建多个产品族中的产品对象。**
+
+而且使用抽象工厂模式还要满足一下条件：
+
+1. 系统中有多个产品族，而系统一次只可能消费其中一族产品
+2. 同属于同一个产品族的产品以其使用。
+   来看看抽象工厂模式的各个角色（和工厂方法的如出一辙）：
+
+角色：
+
+- 抽象工厂角色： 这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。
+- 具体工厂角色：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。在java中它由具体的类来实现。
+- 抽象产品角色：它是具体产品继承的父类或者是实现的接口。在java中一般有抽象类或者接口来实现。
+- 具体产品角色：具体工厂角色所创建的对象就是此角色的实例。在java中由具体的类来实现。
+
+# Spring-SpringMVC
+
+## 为什么要使用spring
+
+### 简介
+
+- 目的：解决企业应用开发的复杂性；
+- 功能：使用基本的JavaBean代替EJB（Enterprise JavaBean），并提供了更多的企业应用功能；
+- 范围：任何Java 应用；
+
+简单来说，Spring是一个轻量级的控制反转(IOC)和面向切面(AOP)的容器框架
+
+### 轻量
+
+
+
+### 控制反转
+
+### 面向切面
+
+### 容器
+
+### 框架
