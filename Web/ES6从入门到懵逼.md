@@ -365,7 +365,7 @@ p.then(data => {console.log(data) }) //这里是成功之后返回的信息
 
 # 基本数据类型
 
-ES6中引入了一种新的基本数据类型：`Symbol`
+ES6中引入了一种新的基本数据类型：`symbol`
 
 之前还有五种基本数据类型：`undefined`,`boolean`,`string`,`number`,`object`,`null`
 
@@ -381,7 +381,7 @@ const people = {
 }
 ```
 
-注意：Symbol类型的值不能够被获取遍历，除非使用ES6提供的Object.getOwnPropertySymbols(people);
+注意：symbol类型的值不能够被获取遍历，除非使用ES6提供的Object.getOwnPropertySymbols(people);
 
 # ES6模块
 

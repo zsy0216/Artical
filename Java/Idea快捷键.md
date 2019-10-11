@@ -1,1 +1,1 @@
-![](https://zsy0216.github.io/image/idea/快捷键.png)
+<img src="https://zsy0216.github.io/image/idea/快捷键.png" />

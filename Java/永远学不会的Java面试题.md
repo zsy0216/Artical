@@ -15,6 +15,34 @@ Java中所有定义的基本类型或对象都必须初始化才能输出值；
 
 否则无法通过编译
 
+## java的基本数据类型转换
+
+- 自动类型转换：小--->大 `byte->short->int->long->float->double`
+
+- 强制类型转换：大--->小 `小类型 变量名 = (大类型) 值`
+
+  注意：自增/自减运算符、复合赋值运算符底层做了优化，内部自动强制类型转换；
+
+  如：++, --, +=, -=, ......
+
+- 类型提升：是指在多种不同数据类型的表达式中，类型会自动向范围表达大的值的数据类型提升；
+
+  ```java
+  long count = 1000000;
+  int price = 1999;
+  long totalPrice = price * count;
+  ```
+
+## short s1 = 1; s1 = s1 + 1;有错吗?short s1 = 1; s1 += 1;有错吗？
+
+1. short s1 = 1; s1 = s1 + 1;
+
+   错误！根据java的基本数据类型转换规则，s1为short类型的变量，在表达式`s1 = s1 + 1;`中，s1会自动转为int类型与1进行运算，运算结果为int类型，而int类型的值 赋值给short类型的变量时需要强制类型转换。
+
+2. short s1 = 1; s1 += 1;
+
+   正确！在复合赋值运算符底层自动进行强制类型转换，所以此处实际上是`s1 = (int)s1 + 1;`
+
 ## ==和equals的区别
 
 - `==`是一个比较运算符
@@ -1294,11 +1322,29 @@ public class Adapter implements Target{
 
 ## <font color="red">静态代理模式</font>
 
-- RealSubject：真实角色，是实现抽象接口的类。
-- Proxy：代理角色，内部含有对真实对象`RealSubject`的引用，从而可以操作真实对象。代理对象提供与真实对象相同的接口，以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。
+- RealSubject：真实对象，是实现抽象接口的类。
+- Proxy：代理对象，内部含有对真实对象`RealSubject`的引用，从而可以操作真实对象。代理对象提供与真实对象相同的接口，以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。
+  - 静态代理：有一个类文件描述代理模式
+  - 动态代理：在内存中形成代理类
 - Subject : 接口，是对象和它的代理共用的接口，让`RealSubject`和`Proxy`具有一致性。
 
 ![](https://zsy0216.github.io/image/java/javase/proxy)
+
+实现步骤：
+
+1. 代理对象和真实对象实现相同的接口；
+
+2. 代理对象 = Proxy.newProxyInstance(三个参数);[动态代理]
+
+   参数：
+
+   1. 类加载器：真实对象.getClass().getClassLoader()
+   2. 接口数组：真实对象.getClass().getInterfaces()
+   3. 处理器：new InvocationHndler()
+
+3. 使用代理对象调用方法；
+
+4. 增强方法；
 
 ```java
 package com.tassel.thread;

@@ -14,7 +14,7 @@ webpack4 默认可以不需要在webpack.config.js中来配置打包的入口和
 
 目录结构：
 
-![webpack](https://zsy0216.coding.me/image/csdn/webpack/webpack.png)
+![webpack](https://zsy0216.github.io/image/csdn/webpack/webpack.png)
 
 ---
 
@@ -32,7 +32,7 @@ webpack
 
 在需要引入的html文件`index.html`中正确引入即可；
 
-![webpack-indexjs](<https://zsy0216.coding.me/image/csdn/webpack/webpack-indexjs.png>)
+![webpack-indexjs](<https://zsy0216.github.io/image/csdn/webpack/webpack-indexjs.png>)
 
 ---
 
