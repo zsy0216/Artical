@@ -322,11 +322,7 @@ SpringBoot使用一个全局的配置文件，配置文件名是固定的；
 
 •application.yml
 
-
-
 配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好；
-
-
 
 YAML（YAML Ain't Markup Language）
 
@@ -814,7 +810,7 @@ java -jar spring-boot-02-config-02-0.0.1-SNAPSHOT.jar --server.port=8087  --serv
 
     ```
 
-    ​
+    
 
 **==将 类路径下  META-INF/spring.factories 里面配置的所有EnableAutoConfiguration的值加入到了容器中；==**
 
@@ -1712,7 +1708,7 @@ Spring Boot 自动配置好了SpringMVC
 
 - Custom `Favicon` support (see below).  favicon.ico
 
-  ​
+  
 
 - 自动注册了 of `Converter`, `GenericConverter`, `Formatter` beans.
 
@@ -1737,7 +1733,7 @@ Spring Boot 自动配置好了SpringMVC
 
     ==自己给容器中添加HttpMessageConverter，只需要将自己的组件注册在容器中（@Bean,@Component）==
 
-    ​
+    
 
 - Automatic registration of `MessageCodesResolver` (see below).定义错误代码生成规则
 

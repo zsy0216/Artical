@@ -23,15 +23,15 @@
 
    之后会进入编辑界面，将配置文件中的文件名字修改为第一步修改的文件名即可.
 
-![1547386959864](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1547386959864.png)
+![1547386959864](assets/updatedefaultname.png)
 
-![1547387162554](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1547387162554.png)
+![1547387162554](assets/update2.png)
 
 ## 2.centos安装gcc 之前的无法上网问题
 
 * 管理员身份输入命令：`ls /etc/sysconfig/network-scripts`
 
-  ![1551348870348](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1551348870348.png)
+  ![1551348870348](assets/network-scripts.png)
 
 * 输入命令：`vi /etc/sysconfig/network-scripts/ifcfg-ens33`
 
@@ -39,7 +39,7 @@
 
 * 修改`BOOTPROTO=dhcp，ONBOOT=yes`
 
-  ![1551348980004](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1551348980004.png)
+  ![1551348980004](assets/network.png)
 
 * 修改完成后 先按Esc键，再输入冒号（：），然后输入wq，最后按回车键方可退出vim编辑器
 
@@ -144,3 +144,31 @@ systemctl daemon-reload
 #ustc中国科技大学   https://docker.mirrors.ustc.edu.cn
 ```
 
+## 9.防火墙相关
+
+centos7默认安装了防火墙，若没有安装执行`yum install firewalld firewalld-config`
+
+```shell
+# 1.查看状态
+systemctl status firewalld
+firewall-cmd --state
+
+# 2.启动防火墙
+systemctl start firewalld
+# 3.禁用防火墙
+systemctl stop firewalld
+
+# 4. 设置开机启动
+systemctl enable firewalld
+# 5.停止并禁用开机启动
+sytemctl disable firewalld
+
+#重启防火墙
+firewall-cmd --reload
+#查看版本
+firewall-cmd --version
+```
+
+## VMware Workstation 网络问题
+
+编辑--->虚拟网络编辑器--->选择下方更改配置(管理员权限)--->选择NAT模式---->DHCP设置
