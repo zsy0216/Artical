@@ -146,14 +146,14 @@ Spring框架简化数据库访问的方式之一就是管理数据库连接的�
 使用注解开发时，spring配置文件中还需要加入自动扫描包的配置，用于自动装配bean，以及自动依赖注入，@Autowired标注的参数自动装配
 
 ```xml
-<context:component-scan base-package="zut.hospital.dao"/>                          
+<context:component-scan base-package="zut.hospital.dao"/>                         
 ```
 
 # 2    Springmvc 配置相关
 
 ## 2.1   Springmvc
 
-![1543729079239](https://zsy0216.coding.me/image/java/ssm/mvc.png)
+![1543729079239](https://zsy0216.github.io/image/java/ssm/mvc.png)
 
 1. 前端控制器：接收请求，响应结果，相当于转发器。
 

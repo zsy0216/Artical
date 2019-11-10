@@ -569,7 +569,7 @@ el表达式中有11个隐式对象；
   - test 是必须属性，接收boolean表达式，如果为true则显示标签体内容，否则不显示；
   - c:if标签没有else情况，可以定义多个c:if实现；
 
-- choose： 相当于java代码的switch语句
+- choose： 相当于java代码的switch语句，也可以作为java的if...else使用
 
   数字编号对应星期几：
 
@@ -622,7 +622,7 @@ el表达式中有11个隐式对象；
     - count：循环次数，从1开始
 
   ```jsp
-  <c:forEach items="$(list)" var="str" varStatus="s">
+  <c:forEach items="${list}" var="str" varStatus="s">
       ${s.index} ${s.count} ${str}
   </c:forEach>
   ```

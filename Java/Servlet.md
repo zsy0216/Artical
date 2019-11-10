@@ -258,7 +258,7 @@ Object value = session.getAtrribute(String name);
 
 与cookie的区别：
 
-- session存储数据再服务器端，cookie在客户端；
+- session存储数据在服务器端，cookie在客户端；
 - session没有数据大小限制，cookie有；
 - session数据安全(在服务器端)，cookie相对不安全；
 
