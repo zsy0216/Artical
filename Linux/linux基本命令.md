@@ -314,3 +314,16 @@ ps -ef
 ps -ef | grep xxx
 ```
 
+## kill
+
+Linux kill命令用于删除执行中的程序或工作。
+
+```shell
+# 杀死进程
+kill 12345
+# 强制杀死进程
+kill -KILL 123456
+# 彻底杀死进程
+kill -9 123456
+```
+
