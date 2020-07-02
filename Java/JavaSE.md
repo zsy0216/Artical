@@ -418,7 +418,7 @@ Vector：数组实现，保证了线程同步
 ```java
 List<String> list = new ArrayList<>();
 //add elements ...
-for(Iterator<String> iter=list.iterator();iter.hasNext();{
+for(Iterator<String> iter=list.iterator();iter.hasNext();){
     String temp = iter.next();
     System.out.println(temp);
 }
@@ -443,7 +443,7 @@ for(Iterator<Entry<Integer,String>> iter=ss.iterator();iter.hasNext();){
 ```java
 Map<Integer,String> map = new HashMap<>();
 Set<Integer> keySet = map.keySet();
-for(Iterator<Integer> iter = keySet.iterator();iter.hasNext();)[{
+for(Iterator<Integer> iter = keySet.iterator();iter.hasNext();){
     Integer key = iter.next();
     System.out.println(key+":"+map.get(key));
 }
@@ -454,7 +454,7 @@ for(Iterator<Integer> iter = keySet.iterator();iter.hasNext();)[{
 ```java
 Set<String> set = new HashSet<>();
 //add elements ...
-for(Iterator<String> iter=set.iterator();iter.hasNext();{
+for(Iterator<String> iter=set.iterator();iter.hasNext();){
     String temp = iter.next();
     System.out.println(temp);
 }
@@ -822,7 +822,7 @@ public class CountDirectory {
 | -------------- | -------------------------------- | -------------------------------------------------- |
 | `InputStream`  | 字节输入流的父类，数据单位为字节 | `int read()`,`void close()`                        |
 | `outputStream` | 字节输出流的父类，数据单位为字节 | `void write(int)`,`void flush()`,`void close()`    |
-| `Reader`       | 字符输入流的父类，数据单位       | `int read()`,`void close()`                        |
+| `Reader`       | 字符输入流的父类，数据单位字符   | `int read()`,`void close()`                        |
 | `Writer`       | 字符输出流的父类，数据单位为字符 | `void write(String)`,`void flush()`,`void close()` |
 
 ## IO流操作步骤
@@ -845,32 +845,32 @@ public class CountDirectory {
 ### 文件字节输入流
 
 ```java
-	    // 1.创建源
-		File src = new File("D:/a.txt");
-		// 2.选择流 文件字节输入流
-		InputStream is = null;
-		try {
-			is = new FileInputStream(src);
-			// 3.操作(读取)
-			int temp;
-			while ((temp = is.read()) != -1) { // 当读到最后一个字节时返回-1
-				System.out.println((char) temp); // 转字节为字符
-			}
-		} catch (FileNotFoundException e) { // fileInputStream()
-			e.printStackTrace();
-		} catch (IOException e) { // read()
-			e.printStackTrace();
-		} finally {
-			if (null != is) {
-				try {
-					// 4. 释放资源
-					is.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+// 1.创建源
+File src = new File("D:/a.txt");
+// 2.选择流 文件字节输入流
+InputStream is = null;
+try {
+    is = new FileInputStream(src);
+    // 3.操作(读取)
+    int temp;
+    while ((temp = is.read()) != -1) { // 当读到最后一个字节时返回-1
+        System.out.println((char) temp); // 转字节为字符
+    }
+} catch (FileNotFoundException e) { // fileInputStream()
+    e.printStackTrace();
+} catch (IOException e) { // read()
+    e.printStackTrace();
+} finally {
+    if (null != is) {
+        try {
+            // 4. 释放资源
+            is.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+}
 ```
 
 ### 文件字节输出流
