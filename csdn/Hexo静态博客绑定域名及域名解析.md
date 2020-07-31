@@ -1,6 +1,6 @@
 示例：
 
-http://zsy.xyz/
+http://zsy0216.github.io/
 
 ### 域名准备
 

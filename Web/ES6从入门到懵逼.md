@@ -1,4 +1,4 @@
-# 介绍
+# ES6 介绍
 
 ES6：ECMScript6
 
