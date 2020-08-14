@@ -1,4 +1,4 @@
-示例预览：[我的主页](http://zsy.xyz/)
+示例预览：[我的主页](https://zsy0216.github.io/)
 
 ### 背景图片添加
 
@@ -26,7 +26,7 @@
 
 在上面打开的配置文件body{}中继续添加以下配置；(`D:\Blog\themes\next\source\css\_custom\custom.styl`)
 
-      ```stylus
+```stylus
 // Custom styles.
 body { 
 	background-image: url(/images/background.jpg);
@@ -42,7 +42,7 @@ body {
 		border-radius: 10px;
 	}
 	
-    //修改头部导航栏显示宽度，透明度，位置等
+	//修改头部导航栏显示宽度，透明度，位置等
 	#header {
 	    padding: 5px 25px;
 		margin: 0 auto;
@@ -53,7 +53,7 @@ body {
 		
 	}
 	
-    //修改底部展示信息显示宽度，透明度，位置等
+	//修改底部展示信息显示宽度，透明度，位置等
 	#footer {
 		padding: 5px 25px;
 		position: relative;
@@ -64,7 +64,7 @@ body {
 		border-radius: 10px;
 	}
 }
-      ```
+```
 
 此时，修改完上面的配置可能会发现首页博客主体部分的下方与底部展示信息的间隙过大，我们加入以下配置进行调整，需要注意的是，此时添加的配置与上方添加位置不同，需要在body{}下方添加；
 

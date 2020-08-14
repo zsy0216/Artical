@@ -6,7 +6,8 @@
 
 ## flex布局
 
-![1542959309570](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1542959309570.png)
+![](https://gitee.com/zsy0216/typora-image/raw/master/typora/flex.png)
+
 main axis：主轴；cross axis：交叉轴
 
 容器的子元素自动成为容器成员，成为flex 项目（item）
@@ -29,7 +30,7 @@ main axis：主轴；cross axis：交叉轴
 
 - column-reverse：垂直方向，起点在下沿。
 
-  ![1546843734228](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843734228.png)
+  ![1546843734228](https://gitee.com/zsy0216/typora-image/raw/master/typora/flex-direction.png)
 
 #### flex-wrap
 
@@ -56,7 +57,7 @@ main axis：主轴；cross axis：交叉轴
 * space-between：两端对齐，item之间的间隔都相等；
 * space-around：item两侧的间隔都相等，所以，项目之间的间隔比项目与边框的间隔大一倍。
 
-![1546843812843](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843812843.png)
+![1546843812843](https://gitee.com/zsy0216/typora-image/raw/master/typora/justify-content.png)
 
 #### align-items
 
@@ -68,7 +69,7 @@ main axis：主轴；cross axis：交叉轴
 - baseline：item的第一行文字的基线对齐（文字的底线）；
 - stretch（默认值）：如果item未设置高度或设为auto，将占满整个容器的高度。
 
-![1546843861305](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843861305.png)
+![1546843861305](https://gitee.com/zsy0216/typora-image/raw/master/typora/align-items.png)
 
 #### align-content
 
@@ -81,7 +82,7 @@ main axis：主轴；cross axis：交叉轴
 + space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
 + stretch（默认值）：轴线占满整个交叉轴。
 
-![1546843894307](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843894307.png)
+![1546843894307](https://gitee.com/zsy0216/typora-image/raw/master/typora/align-content.png)
 
 ### item项目属性
 
@@ -89,19 +90,19 @@ main axis：主轴；cross axis：交叉轴
 
 ​	该属性决定item的排列顺序，数值越小，排列越靠前，默认为`0`。
 
-![1546843937220](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843937220.png)
+![1546843937220](https://gitee.com/zsy0216/typora-image/raw/master/typora/item-order.png)
 
 #### ==flex-grow==
 
 ​	该属性决定item的放大比例，默认为`0`，即如果存在剩余空间，也不放大。类似Android权重（weight）
 
-![1546843962985](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843962985.png)
+![1546843962985](https://gitee.com/zsy0216/typora-image/raw/master/typora/flex-grow.png)
 
 #### flex-shrink
 
 ​	该属性决定了item的缩小比例，默认为`1`，即如果空间不足，item将缩小。`负值对该属性无效`
 
-![1546843985113](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546843985113.png)
+![1546843985113](https://gitee.com/zsy0216/typora-image/raw/master/typora/flex-shrink.png)
 
 #### flex-basis
 
@@ -121,7 +122,7 @@ main axis：主轴；cross axis：交叉轴
 
 ​	该属性可能取6个值，除了auto，其他都和align-items属性完全一致。
 
-![1546844254492](assets/%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1546844254492.png)
+![1546844254492](https://gitee.com/zsy0216/typora-image/raw/master/typora/align-self.png)
 
 ## 边框阴影
 
