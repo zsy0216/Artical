@@ -20,9 +20,7 @@
 - redis-cli.exe ：redis的客户端
 - redis-server.exe ：redis的服务器端
 
-## 命令操作
-
-### redis的数据结构
+## redis的数据结构
 
 redis存储的是 key-value  格式的数据，其中key都是字符串，value有下面5中不同的数据结构：
 
@@ -34,7 +32,7 @@ value的数据结构：
 - 集合类型 set ：hashset格式，不可重复，无序
 - 有序集合类型 sortedset ：不可重复，有序
 
-### 命令操作：
+## 命令操作
 
 [redis教程](https://www.redis.net.cn/tutorial/3508.html)
 
